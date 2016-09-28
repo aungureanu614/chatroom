@@ -1,0 +1,20 @@
+<!doctype html>
+<title>Chatroom</title>
+<meta charset="utf-8">
+
+<!-- JS -->
+<script src="//code.jquery.com/jquery-2.1.0.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="main.js"></script> 
+<style>
+    #inline{
+        display: inline-block;
+    }
+</style>
+
+<div id="inline"><input type="text" id="name" placeholder="Enter username"></div>
+<button id='join'>Join</button>
+<br>
+<input type="text" id="msg" placeholder="Enter message">
+<button id='send'>Send</button>
+<div id="messages"></div>
