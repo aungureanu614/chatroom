@@ -32,8 +32,12 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function(){
         count -=1;
         console.log(count + ' client(s) connected');
+        
+        var user = people[socket.id];
         console.log(people[socket.id] + " has left");
-        //socket.broadcast.emit('disconnect');
+        delete people[socket.id];
+        // socket.broadcast.emit(user + 'has disconnected');
+        io.emit('remove-user', user);
        
        
     })

@@ -15,8 +15,10 @@ $(document).ready(function() {
         messages.append('<div>' + user + " has joined the room" + '</div>')
     }
     
-     var removeUser = function(){
-        messages.append('<div>someone has left the room' + '</div>');
+     var removeUser = function(user){
+         
+         
+        messages.append('<div>' +  user + ' has left the room' + '</div>');
         
     }
     
@@ -55,6 +57,6 @@ $(document).ready(function() {
     
     socket.on('join', addUser);
     socket.on('message', addMessage);
-    socket.on('disconnect', removeUser);
-   
+    socket.on('remove-user', removeUser);
+    
 });
