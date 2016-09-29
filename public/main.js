@@ -8,27 +8,53 @@ $(document).ready(function() {
     
 
     var addMessage = function(user, message) {
-        messages.append('<div>' + user + " says: " + message + '</div>');
+            messages.append('<div>' + user + " says: " + message + '</div>')
     };
     
+    var addUser = function(user){
+        messages.append('<div>' + user + " has joined the room" + '</div>')
+    }
+    
+     var removeUser = function(){
+        messages.append('<div>someone has left the room' + '</div>');
+        
+    }
+    
 
-
-    msg.on('keydown', function(event) {
-        if (event.keyCode != 13) {
-            return;
-        }
+  
+    join.on('click', function(event){
+       
         var user = name.val();
-        if(user != ''){
+        addUser(user);
+        socket.emit('join', user);
+        
+            msg.on('keydown', function(event) {
+            if (event.keyCode != 13) {
+                return;
+            }
+            
             var message = msg.val();
-            addMessage(user, message);
-            socket.emit('message', user, message);
-            msg.val('');
-        }
-            
-            
-    });
+                if(message != ''){
+                addMessage(user, message);
+                socket.emit('message', user, message);
+                msg.val('');
+                }
+        });
+           
+            send.on('click', function(event){
+                var message = msg.val();
+                if(message != ''){
+                addMessage(user, message);
+                socket.emit('message', user, message);
+                msg.val('');
+                }
+            });
+    
+});
     
     
+    socket.on('join', addUser);
     socket.on('message', addMessage);
+    socket.on('disconnect', removeUser);
    
 });

@@ -16,24 +16,26 @@ io.on('connection', function (socket) {
     console.log(count + ' client(s) connected');
     
     socket.on('message', function(user, message){
-        console.log('Received message: ', user, message);
-        socket.broadcast.emit('message', user, message);
+        console.log('Received message: ', people[socket.id], message);
+        socket.broadcast.emit('message', people[socket.id], message);
     })
     
     socket.on('join', function(user){
         people[socket.id] = user;
-        socket.broadcast.emit('join', user + 'has joined');
-        // socket.sockets.emit('update-people', people);
+        console.log(user, "has joined the room");
+        
+        socket.broadcast.emit('join', user);
+        
     })
     
     
     socket.on('disconnect', function(){
         count -=1;
         console.log(count + ' client(s) connected');
-        // socket.broadcast.emit('left');
-        // socket.sockets.emit('update', people[socket.id]);
-        //delete people[socket.id];
-        // socket.sockets.emit('update-people', people);
+        console.log(people[socket.id] + " has left");
+        //socket.broadcast.emit('disconnect');
+       
+       
     })
 });
 
